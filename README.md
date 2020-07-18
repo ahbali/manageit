@@ -1,7 +1,7 @@
 # installation steps:
-- install python
+- install Git
+- install Python
 - install Sqlite
-- install Pipenv : 
 ```
 pip install --user pipenv
 git clone https://github.com/ahbali/manageit.git
