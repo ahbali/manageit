@@ -1,0 +1,89 @@
+Models:
+======
+
+Infrastructure/Equipment:
+    ID,
+    Type: (Server, Firewall, Appliance, Switch, Router, Other),
+    name,
+    IPv4/IPv6 ??,
+    FQDN,
+    physique/virtual,
+    OS: Linux/Windows/BSD,
+    support(:SupportContract),
+    marché/Bon de commande d'aquisition ?? (need more clarification),
+    date de fin de license,
+    date de fin de vie matérielle,
+    référent technique(:Personne),
+    Entité responsable (Division/Service),
+    documentation (fichier locale)(file Upload: restrict file type),
+    Rôle principale,
+    environnement(prdocution, préproduction, dev),
+    date de mise en production,
+
+SupportContract:
+    ID,
+    SupportProvider,
+    date,
+    durée,
+
+
+CertificatSSL:
+    ID,
+    date de validité,
+
+Logiciele:
+    ID,
+    name,
+    herbergé où ?? (Hosting Server(:Equipment), port),
+    language (Programmation) ??,
+    référent technique (:Personne),
+    Entité responsable (Division/Service),
+    documentation (fichier locale)(file Upload: restrict file type),
+    descritpiton(textField),
+    environnement (prdocution/pré-production/dev),
+    date de mise en production,
+    serveur applicatif (maybe the same as the Hosting server)(:Logiciele),
+    serveur de base de données (:Logiciele),
+
+Personne:
+    ID,
+    Nom,
+    prénom,
+    Poste occupé,
+    service,
+    division,
+    direction,
+    Numero de téléphone,
+    adresse email,
+
+=====
+Views:
+=====
+
+    home:
+        nombre d'équipement,
+        nombre des application,
+        nombre de Personel,
+        warning(date de fin de vie/support proche 6 mois),
+        Problème(fin de vie/support),
+        Recherche application/serveur: (nom, IP, date de mise en prod, date de fin de vie,
+        date de fin de support),
+
+    Item Detail View:
+        display details of the Item with given Id in the URL,
+        export vers ficher PDF, CSV (entité equipment /logiciel),
+        Edit button (edit item details)
+
+    Search Result List View:
+        dispaly list of clickable search results,
+        export des résultats de recherche vers un fichier (PDF, CSV),
+    
+    Edit/New item Detail View:
+        display form for item fields,
+        display Item Details View after hitting Save Button,
+
+
+
+authentification: 
+
+modification: 
