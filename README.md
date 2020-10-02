@@ -14,3 +14,15 @@ $ python manage.py runserver
 ```
 - go to : http://127.0.0.1:8000/admin/
 - login with the superuser account you created.
+
+# updating steps:
+```Shell
+$ cd manageit
+$ git pull
+$ pipenv install
+$ pipenv shell
+$ python manage.py migrate
+$ python manage.py runserver
+```
+- go to : http://127.0.0.1:8000/admin/
+- login with the superuser account you created.
