@@ -50,7 +50,9 @@ class Equipment(models.Model):
         "Person", on_delete=models.DO_NOTHING, null=True
     )
     entite_responsable = models.CharField(max_length=100)
-    # documentation = models.FileField()
+    documentation = models.FileField(
+        upload_to="Documentation/Equipment/%Y/%m/%d", null=True
+    )
     role = models.CharField(max_length=100)
     environment = models.CharField(
         max_length=4,
@@ -100,7 +102,9 @@ class Software(models.Model):
     referent_technique = models.ForeignKey(
         "Person", on_delete=models.DO_NOTHING, null=True
     )
-    # documentation = models.FileField()
+    documentation = models.FileField(
+        upload_to="Documentation/Software/%Y/%m/%d", null=True
+    )
     description = models.TextField(max_length=1000)
     environment = models.CharField(
         max_length=4,
