@@ -62,7 +62,7 @@ class Equipment(models.Model):
     ship_to_prod_date = models.DateField(default=timezone.now)
 
     def __str__(self) -> str:
-        return f"{self.name} @ {self.ip}"
+        return f"{self.name}@{self.ip}"
 
 
 class SupportContract(models.Model):

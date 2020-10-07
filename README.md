@@ -12,8 +12,9 @@ $ python manage.py migrate
 $ python manage.py createsuperuser
 $ python manage.py runserver
 ```
-- go to : http://127.0.0.1:8000/admin/
+- admin page : http://127.0.0.1:8000/admin/
 - login with the superuser account you created.
+- main site : http://127.0.0.1:8000/
 
 # updating steps:
 ```Shell
@@ -24,5 +25,6 @@ $ pipenv shell
 $ python manage.py migrate
 $ python manage.py runserver
 ```
-- go to : http://127.0.0.1:8000/admin/
+- admin page : http://127.0.0.1:8000/admin/
 - login with the superuser account you created.
+- main site : http://127.0.0.1:8000/

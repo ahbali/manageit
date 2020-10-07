@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h3>State of your IT</h3>
+
+<div class="row">
+    <div class="col mx-3">
+        <ul class="list-group list-group-horizontal">
+            <li class="list-group-item">number of Equipment: {{ number_of_equipment }}</li>
+            <li class="list-group-item">number of Apps: {{ number_of_apps }}</li>
+            <li class="list-group-item">number of Persons: {{ number_of_persons }}</li>
+        </ul>
+    </div>
+</div>
+<div class="row my-3">
+    <div class="col mx-3">
+        <div class="card border-danger">
+            <div class="card-header">Problems <span class="badge badge-danger">{{ problems_count }}</span></div>
+            <div class="card-body">
+                Equipment end of license:
+                <ul class="list-group">
+                    {% for equipment in problems_equipment %}
+                    <li class="list-group-item list-group-item-danger">{{ equipment }}</li>
+                    {% endfor %}
+                </ul>
+                Equipment end of support:
+                <ul class="list-group">
+                    {% for equipment in problems_equipment_support %}
+                    <li class="list-group-item list-group-item-danger">{{ equipment }}</li>
+                    {% endfor %}
+                </ul>
+                SSL Cert expired:
+                <ul class="list-group">
+                    {% for cert in problems_ssl_cert %}
+                    <li class="list-group-item list-group-item-danger">{{ cert }}</li>
+                    {% endfor %}
+                </ul>
+
+            </div>
+        </div>
+    </div>
+    <div class="col mx-3">
+        <div class="card border-warning">
+            <div class="card-header">Warnings <span class="badge badge-warning">{{ warnings_count }}</span></div>
+            <div class="card-body">
+                Equipment near end of license:
+                <ul class="list-group">
+                    {% for equipment in warnings_equipment %}
+                    <li class="list-group-item list-group-item-warning">{{ equipment }}</li>
+                    {% endfor %}
+                </ul>
+                Equipment near end of support:
+                <ul class="list-group">
+                    {% for equipment in warnings_equipment_support %}
+                    <li class="list-group-item list-group-item-warning">{{ equipment }}</li>
+                    {% endfor %}
+                </ul>
+                SSL Cert near expiration:
+                <ul class="list-group">
+                    {% for cert in warnings_ssl_cert %}
+                    <li class="list-group-item list-group-item-warning">{{ cert }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
