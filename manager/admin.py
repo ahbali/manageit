@@ -2,6 +2,19 @@ from manager.models import Equipment, SSLCert, Software, Person, SupportContract
 from django.contrib import admin
 
 
+class EquipmentInline(admin.TabularInline):
+    model = Equipment
+    fields = (
+        "name",
+        "equipment_type",
+        "ip",
+        "fqdn",
+        "license_end",
+        "environment",
+    )
+    extra = 0
+
+
 @admin.register(Equipment)
 class EquipmentAdmin(admin.ModelAdmin):
     list_display = (
@@ -36,6 +49,7 @@ class PersonAdmin(admin.ModelAdmin):
 class SupportContractAdmin(admin.ModelAdmin):
     list_display = ("support_provider", "contract_date", "expiration_date")
     list_filter = ("expiration_date", "contract_date")
+    # inlines = [EquipmentInline]
 
 
 # Register your models here.
