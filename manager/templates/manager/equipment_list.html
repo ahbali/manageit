@@ -4,12 +4,30 @@
 {% block active_equipments %}active{% endblock active_equipments %}
 
 {% block content %}
-<h3>Equipments:</h3>
-<ul class="list-group">
-    {% for equipment in object_list %}
-        <li class="list-group-item">{{ equipment }}</li>
-    {% empty %}
-        <li >--no items--</li>
-    {% endfor %}
-</ul>
+<h3 class="my-3">Equipments:</h3>
+
+<table class="table table-striped table-hover">
+    <thead class="thead-dark">
+        <th scope="col">name</th>
+        <th scope="col">equipment_type</th>
+        <th scope="col">ip</th>
+        <th scope="col">fqdn</th>
+        <th scope="col">license_end</th>
+        <th scope="col">environment</th>
+    </thead>
+    <tbody>
+        {% for equipment in object_list %}
+        <tr>
+            <td><a href="{{ equipment.get_absolute_url }}">{{equipment.name}}</a></td>
+            <td>{{equipment.get_equipment_type_display}}</td>
+            <td>{{equipment.ip}}</td>
+            <td>{{equipment.fqdn}}</td>
+            <td>{{equipment.license_end}}</td>
+            <td>{{equipment.get_environment_display}}</td>
+        </tr>
+        {% empty %}
+            <li>-- no items --</li>
+        {% endfor %}
+    </tbody>
+</table>
 {% endblock content %}

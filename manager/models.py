@@ -3,6 +3,7 @@ import uuid
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
+from django.urls import reverse_lazy
 
 
 class Equipment(models.Model):
@@ -65,6 +66,9 @@ class Equipment(models.Model):
 
     class Meta:
         ordering = ["license_end"]
+
+    def get_absolute_url(self):
+        return reverse_lazy("manager:equipment-detail", args=[str(self.uid)])
 
     def __str__(self) -> str:
         return f"{self.name}@{self.ip}"

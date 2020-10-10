@@ -3,7 +3,7 @@ from django.utils import timezone
 from manager.models import Equipment, Person, SSLCert, Software, SupportContract
 from django.http import request
 from django.shortcuts import render
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 
 # Create your views here.
 # home:
@@ -80,4 +80,24 @@ class SSLCertListView(ListView):
 
 
 class SupportContractListView(ListView):
+    model = SupportContract
+
+
+class EquipmentDetailView(DetailView):
+    model = Equipment
+
+
+class SoftwareDetailView(DetailView):
+    model = Software
+
+
+class PersonDetailView(DetailView):
+    model = Person
+
+
+class SSLCertDetailView(DetailView):
+    model = SSLCert
+
+
+class SupportContractDetailView(DetailView):
     model = SupportContract

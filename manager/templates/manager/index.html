@@ -7,11 +7,11 @@
 
 <div class="row my-3">
     <div class="col mx-3">
-        <ul class="list-group list-group-horizontal">
-            <li class="list-group-item">number of Equipment: {{ number_of_equipment }}</li>
-            <li class="list-group-item">number of Apps: {{ number_of_apps }}</li>
-            <li class="list-group-item">number of Persons: {{ number_of_persons }}</li>
-        </ul>
+        <div class="list-group list-group-horizontal">
+            <a href="{% url 'manager:equipments' %}" class="list-group-item list-group-item-action">number of Equipment: {{ number_of_equipment }}</a>
+            <a href="#" class="list-group-item list-group-item-action">number of Apps: {{ number_of_apps }}</a>
+            <a href="#" class="list-group-item list-group-item-action">number of Persons: {{ number_of_persons }}</a>
+        </div>
     </div>
 </div>
 <div class="row my-3">
@@ -20,29 +20,29 @@
             <div class="card-header">Problems <span class="badge badge-danger">{{ problems_count }}</span></div>
             <div class="card-body">
                 Equipment end of license:
-                <ul class="list-group">
+                <div class="list-group">
                     {% for equipment in problems_equipment %}
-                        <li class="list-group-item list-group-item-danger">{{ equipment }}</li>
+                        <a href="{{ equipment.get_absolute_url }}" class="list-group-item list-group-item-action list-group-item-danger">{{ equipment }}</a>
                     {% empty %}
-                        <li class="list-group-item">--no items--</li>
+                        <a href="#" class="list-group-item list-group-item-action">--no items--</a>
                     {% endfor %}
-                </ul>
+                </div>
                 Equipment end of support:
-                <ul class="list-group">
+                <div class="list-group">
                     {% for equipment in problems_equipment_support %}
-                    <li class="list-group-item list-group-item-danger">{{ equipment }}</li>
+                        <a href="{{ equipment.get_absolute_url }}" class="list-group-item list-group-item-action list-group-item-danger">{{ equipment }}</a>
                     {% empty %}
-                        <li class="list-group-item">--no items--</li>
+                        <a href="#" class="list-group-item list-group-item-action">--no items--</a>
                     {% endfor %}
-                </ul>
+                </div>
                 SSL Cert expired:
-                <ul class="list-group">
+                <div class="list-group">
                     {% for cert in problems_ssl_cert %}
-                    <li class="list-group-item list-group-item-danger">{{ cert }}</li>
+                        <a href="{{ equipment.get_absolute_url }}" class="list-group-item list-group-item-action list-group-item-danger">{{ cert }}</a>
                     {% empty %}
-                        <li class="list-group-item">--no items--</li>
+                        <a href="#" class="list-group-item list-group-item-action">--no items--</a>
                     {% endfor %}
-                </ul>
+                </div>
 
             </div>
         </div>
@@ -52,29 +52,29 @@
             <div class="card-header">Warnings <span class="badge badge-warning">{{ warnings_count }}</span></div>
             <div class="card-body">
                 Equipment near end of license:
-                <ul class="list-group">
+                <div class="list-group">
                     {% for equipment in warnings_equipment %}
-                    <li class="list-group-item list-group-item-warning">{{ equipment }}</li>
+                        <a href="{{ equipment.get_absolute_url }}" class="list-group-item list-group-item-action list-group-item-warning">{{ equipment }}</a>
                     {% empty %}
-                        <li class="list-group-item">--no items--</li>
+                        <a href="#" class="list-group-item list-group-item-action">--no items--</a>
                     {% endfor %}
-                </ul>
+                </div>
                 Equipment near end of support:
-                <ul class="list-group">
+                <div class="list-group">
                     {% for equipment in warnings_equipment_support %}
-                    <li class="list-group-item list-group-item-warning">{{ equipment }}</li>
+                        <a href="{{ equipment.get_absolute_url }}" class="list-group-item list-group-item-action list-group-item-warning">{{ equipment }}</a>
                     {% empty %}
-                        <li class="list-group-item">--no items--</li>
+                        <a href="#" class="list-group-item list-group-item-action">--no items--</a>
                     {% endfor %}
-                </ul>
+                </div>
                 SSL Cert near expiration:
-                <ul class="list-group">
+                <div class="list-group">
                     {% for cert in warnings_ssl_cert %}
-                    <li class="list-group-item list-group-item-warning">{{ cert }}</li>
+                        <a href="{{ equipment.get_absolute_url }}" class="list-group-item list-group-item-action list-group-item-warning">{{ cert }}</a>
                     {% empty %}
-                        <li class="list-group-item">--no items--</li>
+                        <a href="#" class="list-group-item list-group-item-action">--no items--</a>
                     {% endfor %}
-                </ul>
+                </div>
             </div>
         </div>
     </div>
