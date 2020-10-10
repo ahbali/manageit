@@ -1,9 +1,9 @@
 import datetime
 from django.utils import timezone
-from manager.models import Equipment, Person, SSLCert, Software
+from manager.models import Equipment, Person, SSLCert, Software, SupportContract
 from django.http import request
 from django.shortcuts import render
-from django.views import generic as generic_views
+from django.views.generic import ListView
 
 # Create your views here.
 # home:
@@ -61,3 +61,23 @@ def index(request):
         "warnings_count": warnings_count,
     }
     return render(request, "manager/index.html", context)
+
+
+class EquipmentListView(ListView):
+    model = Equipment
+
+
+class SoftwareListView(ListView):
+    model = Software
+
+
+class PersonListView(ListView):
+    model = Person
+
+
+class SSLCertListView(ListView):
+    model = SSLCert
+
+
+class SupportContractListView(ListView):
+    model = SupportContract

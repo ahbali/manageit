@@ -1,9 +1,11 @@
 {% extends 'base.html' %}
 
-{% block content %}
-<h3>State of your IT</h3>
+{% block title %}<title>Dashboard</title>{% endblock title %}
+{% block active_index %}active{% endblock active_index %}
 
-<div class="row">
+{% block content %}
+
+<div class="row my-3">
     <div class="col mx-3">
         <ul class="list-group list-group-horizontal">
             <li class="list-group-item">number of Equipment: {{ number_of_equipment }}</li>
@@ -20,19 +22,25 @@
                 Equipment end of license:
                 <ul class="list-group">
                     {% for equipment in problems_equipment %}
-                    <li class="list-group-item list-group-item-danger">{{ equipment }}</li>
+                        <li class="list-group-item list-group-item-danger">{{ equipment }}</li>
+                    {% empty %}
+                        <li class="list-group-item">--no items--</li>
                     {% endfor %}
                 </ul>
                 Equipment end of support:
                 <ul class="list-group">
                     {% for equipment in problems_equipment_support %}
                     <li class="list-group-item list-group-item-danger">{{ equipment }}</li>
+                    {% empty %}
+                        <li class="list-group-item">--no items--</li>
                     {% endfor %}
                 </ul>
                 SSL Cert expired:
                 <ul class="list-group">
                     {% for cert in problems_ssl_cert %}
                     <li class="list-group-item list-group-item-danger">{{ cert }}</li>
+                    {% empty %}
+                        <li class="list-group-item">--no items--</li>
                     {% endfor %}
                 </ul>
 
@@ -47,18 +55,24 @@
                 <ul class="list-group">
                     {% for equipment in warnings_equipment %}
                     <li class="list-group-item list-group-item-warning">{{ equipment }}</li>
+                    {% empty %}
+                        <li class="list-group-item">--no items--</li>
                     {% endfor %}
                 </ul>
                 Equipment near end of support:
                 <ul class="list-group">
                     {% for equipment in warnings_equipment_support %}
                     <li class="list-group-item list-group-item-warning">{{ equipment }}</li>
+                    {% empty %}
+                        <li class="list-group-item">--no items--</li>
                     {% endfor %}
                 </ul>
                 SSL Cert near expiration:
                 <ul class="list-group">
                     {% for cert in warnings_ssl_cert %}
                     <li class="list-group-item list-group-item-warning">{{ cert }}</li>
+                    {% empty %}
+                        <li class="list-group-item">--no items--</li>
                     {% endfor %}
                 </ul>
             </div>

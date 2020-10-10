@@ -6,7 +6,8 @@ from django.urls import path
 
 app_name = "manager"
 
-urlpatterns = [path("", views.index, name="index"),] + static(
-    settings.MEDIA_URL, document_root=settings.MEDIA_ROOT
-)
+urlpatterns = [
+    path("", views.index, name="index"),
+    path("equipments/", views.EquipmentListView.as_view(), name="equipments"),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

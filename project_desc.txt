@@ -83,6 +83,18 @@ Views:
         display Item Details View after hitting Save Button,
 
 
+urls list:
+    equipments/
+    software/
+    person/
+    sslcert/
+    support/
+    equipment/<id>/
+    software/<id>/
+    person/<id>/
+    sslcert/<id>/
+    support/<id>/
+
 
 authentification: 
 
