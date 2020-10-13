@@ -4,5 +4,21 @@
 {% block active_equipments %}active{% endblock active_equipments %}
 
 {% block content %}
-<h1>Details of {{ object.uid }} {{ object.name }} {{ object.get_equipment_type.display }} should be here :)</h1>
+<h3 class="my-3">Details:</h3>
+<p><strong>name: </strong>{{ object.name }}</p>
+<p><strong>type: </strong>{{ object.get_equipment_type_display }}</p>
+<p><strong>ip: </strong>{{ object.ip }}</p>
+<p><strong>fqdn: </strong>{{ object.fqdn }}</p>
+<p><strong>virtual/physical: </strong>{{ object.get_virt_phys_display }}</p>
+<p><strong>operating system: </strong>{{ object.get_operating_system_display }}</p>
+<p><strong>support provider: </strong>{{ object.support.support_provider }}<strong class="ml-3">contract date: </strong>{{ object.support.contract_date }}<strong class="ml-3">date d'expiration: </strong>{{ object.support.expiration_date }}</p>
+<p><strong>license end: </strong>{{ object.license_end }}</p>
+<p><strong>end of life: </strong>{{ object.end_of_life }}</p>
+<p><strong>referent technique: </strong>{{ object.referent_technique.first_name }} {{ object.referent_technique.last_name }}<strong class="ml-3">phone number: </strong>{{ object.referent_technique.phone_number }}<strong class="ml-3">email: </strong>{{ object.referent_technique.email }}</p>
+<p><strong>entitée responsable: </strong>{{ object.entite_responsable }}</p>
+<p><strong>documentation: </strong>{{ object.documentation }}</p>
+<p><strong>role: </strong>{{ object.role }}</p>
+<p><strong>environment: </strong>{{ object.get_environment_display }}</p>
+<p><strong>date de mise en production: </strong>{{ object.ship_to_prod_date }}</p>
+
 {% endblock content %}
