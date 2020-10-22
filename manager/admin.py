@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import Any
 from manager.forms import (
     EquipmentMultipleDocumentationForm,
@@ -68,7 +69,7 @@ class EquipmentAdmin(admin.ModelAdmin):
     )
 
     def get_support_expiration_date(self, obj: Equipment):
-        return obj.support.expiration_date
+        return obj.support.expiration_date if obj.support else datetime.max
 
     get_support_expiration_date.short_description = _("support expiration")
     get_support_expiration_date.admin_order_field = "support"
