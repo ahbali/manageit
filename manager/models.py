@@ -30,9 +30,15 @@ class DocumentationMany(models.Model):
 
 class SupportContract(models.Model):
     uid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    support_provider = models.CharField(max_length=100, null=True, blank=True)
-    contract_date = models.DateField(null=True, blank=True)
-    expiration_date = models.DateField(null=True, blank=True)
+    support_provider = models.CharField(
+        verbose_name=_("Support provider"), max_length=100, null=True, blank=True
+    )
+    contract_date = models.DateField(
+        verbose_name=_("Contract date"), null=True, blank=True
+    )
+    expiration_date = models.DateField(
+        verbose_name=_("Expiration date"), null=True, blank=True
+    )
 
     class Meta:
         ordering = ["expiration_date"]
@@ -43,14 +49,30 @@ class SupportContract(models.Model):
 
 class Person(models.Model):
     uid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    first_name = models.CharField(max_length=50, null=True, blank=True)
-    last_name = models.CharField(max_length=50, null=True, blank=True)
-    poste_occupe = models.CharField(max_length=100, null=True, blank=True)
-    service = models.CharField(max_length=100, null=True, blank=True)
-    division = models.CharField(max_length=100, null=True, blank=True)
-    direction = models.CharField(max_length=100, null=True, blank=True)
-    phone_number = models.CharField(max_length=20, null=True, blank=True)
-    email = models.EmailField(max_length=254, null=True, blank=True)
+    first_name = models.CharField(
+        verbose_name=_("First name"), max_length=50, null=True, blank=True
+    )
+    last_name = models.CharField(
+        verbose_name=_("Last name"), max_length=50, null=True, blank=True
+    )
+    poste_occupe = models.CharField(
+        verbose_name=_("Position"), max_length=100, null=True, blank=True
+    )
+    service = models.CharField(
+        verbose_name=_("Service"), max_length=100, null=True, blank=True
+    )
+    division = models.CharField(
+        verbose_name=_("Division"), max_length=100, null=True, blank=True
+    )
+    direction = models.CharField(
+        verbose_name=_("Direction"), max_length=100, null=True, blank=True
+    )
+    phone_number = models.CharField(
+        verbose_name=_("Phone number"), max_length=20, null=True, blank=True
+    )
+    email = models.EmailField(
+        verbose_name=_("Email"), max_length=254, null=True, blank=True
+    )
 
     class Meta:
         ordering = ("last_name", "first_name")
@@ -61,8 +83,12 @@ class Person(models.Model):
 
 class SSLCert(models.Model):
     uid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    name = models.CharField(max_length=100, null=True, blank=True)
-    expiration_date = models.DateField(null=True, blank=True)
+    name = models.CharField(
+        verbose_name=_("Name"), max_length=100, null=True, blank=True
+    )
+    expiration_date = models.DateField(
+        verbose_name=_("Expiration date"), null=True, blank=True
+    )
 
     class Meta:
         ordering = ["expiration_date"]
@@ -98,10 +124,16 @@ class Equipment(models.Model):
 
     uid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     equipment_type = models.CharField(
-        max_length=5, choices=TypeOfEquipment.choices, null=True, blank=True
+        verbose_name=_("Equipment type"),
+        max_length=5,
+        choices=TypeOfEquipment.choices,
+        null=True,
+        blank=True,
     )
-    name = models.CharField(max_length=100, null=True, blank=True)
-    ip = models.GenericIPAddressField(_("IP"), null=True, blank=True)
+    name = models.CharField(
+        verbose_name=_("Name"), max_length=100, null=True, blank=True
+    )
+    ip = models.GenericIPAddressField(verbose_name=_("IP"), null=True, blank=True)
     fqdn = models.CharField(
         verbose_name=_("FQDN"),
         max_length=1000,
@@ -110,29 +142,49 @@ class Equipment(models.Model):
         validators=[DNSValidator],
     )
     virt_phys = models.CharField(
+        verbose_name=_("Virtual/Physical"),
         max_length=4,
         choices=TypeOfServer.choices,
         null=True,
         blank=True,
-        verbose_name=_("Virtual/Physical"),
     )
     operating_system = models.CharField(
-        max_length=5, choices=TypeOfOS.choices, null=True, blank=True
+        verbose_name=_("Operating system"),
+        max_length=5,
+        choices=TypeOfOS.choices,
+        null=True,
+        blank=True,
     )
     support = models.ForeignKey(
-        SupportContract, on_delete=models.DO_NOTHING, null=True, blank=True
+        SupportContract,
+        verbose_name=_("Support"),
+        on_delete=models.DO_NOTHING,
+        null=True,
+        blank=True,
     )
     # marche = models.CharField(max_length=200)
-    license_end = models.DateField(_("License end"), null=True, blank=True)
-    end_of_life = models.DateField(_("End of life"), null=True, blank=True)
+    license_end = models.DateField(verbose_name=_("License end"), null=True, blank=True)
+    end_of_life = models.DateField(verbose_name=_("End of life"), null=True, blank=True)
     referent_technique = models.ForeignKey(
-        Person, on_delete=models.DO_NOTHING, null=True, blank=True
+        Person,
+        verbose_name=_("Technical Mentor"),
+        on_delete=models.DO_NOTHING,
+        null=True,
+        blank=True,
     )
-    entite_responsable = models.CharField(max_length=100, null=True, blank=True)
+    entite_responsable = models.CharField(
+        verbose_name=_("Responsible entity"), max_length=100, null=True, blank=True
+    )
     documentation_many = models.ManyToManyField(DocumentationMany, blank=True)
-    role = models.CharField(max_length=100, null=True, blank=True)
+    role = models.CharField(
+        verbose_name=_("Role"), max_length=100, null=True, blank=True
+    )
     environment = models.CharField(
-        max_length=4, choices=TypeOfEnvironment.choices, null=True, blank=True
+        verbose_name=_("Environment"),
+        max_length=4,
+        choices=TypeOfEnvironment.choices,
+        null=True,
+        blank=True,
     )
     ship_to_prod_date = models.DateField(
         verbose_name=_("Production date"), null=True, blank=True
@@ -155,22 +207,40 @@ class Software(models.Model):
         DEVELOPMENT = "DEV", _("Development")
 
     uid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    name = models.CharField(max_length=50)
+    name = models.CharField(verbose_name=_("Name"), max_length=50)
     equipment = models.ForeignKey(
-        Equipment, on_delete=models.DO_NOTHING, null=True, blank=True
+        Equipment,
+        verbose_name=_("Equipment"),
+        on_delete=models.DO_NOTHING,
+        null=True,
+        blank=True,
     )
     referent_technique = models.ForeignKey(
-        Person, on_delete=models.DO_NOTHING, null=True, blank=True
+        Person,
+        verbose_name=_("Technical Mentor"),
+        on_delete=models.DO_NOTHING,
+        null=True,
+        blank=True,
     )
-    description = models.TextField(max_length=1000, null=True, blank=True)
+    description = models.TextField(
+        verbose_name=_("Description"), max_length=1000, null=True, blank=True
+    )
     environment = models.CharField(
-        max_length=4, choices=TypeOfEnvironment.choices, null=True, blank=True
+        verbose_name=_("Environment"),
+        max_length=4,
+        choices=TypeOfEnvironment.choices,
+        null=True,
+        blank=True,
     )
     ship_to_prod_date = models.DateField(
         verbose_name=_("Production date"), null=True, blank=True
     )
     database_sever = models.ForeignKey(
-        "self", on_delete=models.DO_NOTHING, null=True, blank=True
+        "self",
+        verbose_name=_("Database server"),
+        on_delete=models.DO_NOTHING,
+        null=True,
+        blank=True,
     )
 
     class Meta:
@@ -182,9 +252,14 @@ class Software(models.Model):
 
 class EquipmentDocumentation(models.Model):
     uid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    model = models.ForeignKey(Equipment, on_delete=models.CASCADE)
+    model = models.ForeignKey(
+        Equipment, verbose_name=_("Equipment"), on_delete=models.CASCADE
+    )
     document = models.FileField(
-        upload_to="Documentation/equipment", null=True, blank=True
+        verbose_name=_("Document"),
+        upload_to="Documentation/equipment",
+        null=True,
+        blank=True,
     )
 
     def __str__(self) -> str:
@@ -193,10 +268,15 @@ class EquipmentDocumentation(models.Model):
 
 class SoftwareDocumentation(models.Model):
     uid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    document = models.FileField(
-        upload_to="Documentation/software", null=True, blank=True
+    model = models.ForeignKey(
+        Software, verbose_name=_("Software"), on_delete=models.CASCADE
     )
-    model = models.ForeignKey(Software, on_delete=models.CASCADE)
+    document = models.FileField(
+        verbose_name=_("Document"),
+        upload_to="Documentation/software",
+        null=True,
+        blank=True,
+    )
 
     def __str__(self) -> str:
         return self.document.name
