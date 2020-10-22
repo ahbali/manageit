@@ -6,6 +6,26 @@ from django.utils import timezone
 from django.urls import reverse_lazy
 
 
+from django.core.validators import RegexValidator
+
+
+DNSValidator = RegexValidator(
+    regex="^[0-9A-Za-z._-]+$",
+    message="Only alphanumeric characters, hyphens, periods, and underscores are allowed in DNS names",
+    code="invalid",
+)
+
+
+class DocumentationMany(models.Model):
+    uid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    documentation = models.FileField(
+        upload_to="Documentation/many", null=True, blank=True
+    )
+
+    def __str__(self):
+        return self.documentation.name
+
+
 class Equipment(models.Model):
     class TypeOfEquipment(models.TextChoices):
         SERVER = "SRV", _("Server")
@@ -24,6 +44,7 @@ class Equipment(models.Model):
         LINUX = "LINUX", _("Linux")
         BSD = "BSD", _("BSD")
         IOS = "IOS", _("CISCO IOS")
+        OTHER = "OTHER", _("Other")
 
     class TypeOfEnvironment(models.TextChoices):
         PRODUCTION = "PROD", _("Production")
@@ -35,34 +56,43 @@ class Equipment(models.Model):
         max_length=5, choices=TypeOfEquipment.choices, default=TypeOfEquipment.APPLIANCE
     )
     name = models.CharField(max_length=100)
-    ip = models.GenericIPAddressField()
-    fqdn = models.URLField()
+    ip = models.GenericIPAddressField(_("IP"), blank=True, null=True)
+    fqdn = models.CharField(
+        verbose_name=_("FQDN"),
+        max_length=1000,
+        null=True,
+        blank=True,
+        validators=[DNSValidator],
+    )
     virt_phys = models.CharField(
-        max_length=4, choices=TypeOfServer.choices, default=TypeOfServer.PHYSICAL
+        max_length=4,
+        choices=TypeOfServer.choices,
+        default=TypeOfServer.PHYSICAL,
+        verbose_name=_("Virtual/Physical"),
     )
     operating_system = models.CharField(
         max_length=5, choices=TypeOfOS.choices, default=TypeOfOS.LINUX
     )
     support = models.ForeignKey(
-        "SupportContract", on_delete=models.CASCADE, null=True, blank=True
+        "SupportContract", on_delete=models.DO_NOTHING, null=True, blank=True
     )
     # marche = models.CharField(max_length=200)
-    license_end = models.DateField(default=timezone.now)
-    end_of_life = models.DateField(default=timezone.now)
+    license_end = models.DateField(default=timezone.now, null=True, blank=True)
+    end_of_life = models.DateField(default=timezone.now, null=True, blank=True)
     referent_technique = models.ForeignKey(
         "Person", on_delete=models.DO_NOTHING, null=True, blank=True
     )
     entite_responsable = models.CharField(max_length=100)
-    documentation = models.FileField(
-        upload_to="Documentation/Equipment/%Y/%m/%d", null=True, blank=True
-    )
+    documentation_many = models.ManyToManyField(DocumentationMany, blank=True)
     role = models.CharField(max_length=100)
     environment = models.CharField(
         max_length=4,
         choices=TypeOfEnvironment.choices,
         default=TypeOfEnvironment.PRODUCTION,
     )
-    ship_to_prod_date = models.DateField(default=timezone.now)
+    ship_to_prod_date = models.DateField(
+        verbose_name=_("Production date"), default=timezone.now, blank=True, null=True,
+    )
 
     class Meta:
         ordering = ["license_end"]
@@ -114,13 +144,10 @@ class Software(models.Model):
     uid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=50)
     equipment = models.ForeignKey(
-        "Equipment", on_delete=models.DO_NOTHING, null=True, blank=True
+        Equipment, on_delete=models.DO_NOTHING, null=True, blank=True
     )
     referent_technique = models.ForeignKey(
-        "Person", on_delete=models.DO_NOTHING, null=True, blank=True
-    )
-    documentation = models.FileField(
-        upload_to="Documentation/Software/%Y/%m/%d", null=True, blank=True
+        Person, on_delete=models.DO_NOTHING, null=True, blank=True
     )
     description = models.TextField(max_length=1000)
     environment = models.CharField(
@@ -128,9 +155,11 @@ class Software(models.Model):
         choices=TypeOfEnvironment.choices,
         default=TypeOfEnvironment.PRODUCTION,
     )
-    ship_to_prod_date = models.DateField(default=timezone.now)
+    ship_to_prod_date = models.DateField(
+        verbose_name=_("Production date"), default=timezone.now
+    )
     database_sever = models.ForeignKey(
-        "Software", on_delete=models.DO_NOTHING, null=True, blank=True
+        "self", on_delete=models.DO_NOTHING, null=True, blank=True
     )
 
     class Meta:
@@ -150,3 +179,25 @@ class SSLCert(models.Model):
 
     def __str__(self) -> str:
         return f"{self.name}"
+
+
+class EquipmentDocumentation(models.Model):
+    uid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    model = models.ForeignKey(Equipment, on_delete=models.CASCADE)
+    document = models.FileField(
+        upload_to="Documentation/equipment", null=True, blank=True
+    )
+
+    def __str__(self) -> str:
+        return self.document.name
+
+
+class SoftwareDocumentation(models.Model):
+    uid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    document = models.FileField(
+        upload_to="Documentation/software", null=True, blank=True
+    )
+    model = models.ForeignKey(Software, on_delete=models.CASCADE)
+
+    def __str__(self) -> str:
+        return self.document.name
