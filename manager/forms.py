@@ -20,7 +20,7 @@ class EquipmentMultipleDocumentationForm(forms.ModelForm):
         required=False,
     )
 
-    def save_docs(self, equipment):
+    def save_docs(self, equipment: Equipment):
         for file in self.files.getlist("doc_files"):
             doc = EquipmentDocumentation(document=file, model=equipment)
             doc.save()
@@ -37,7 +37,7 @@ class SoftwareMultipleDocumentationForm(forms.ModelForm):
         required=False,
     )
 
-    def save_docs(self, software):
+    def save_docs(self, software: Software):
         for file in self.files.getlist("doc_files"):
             doc = SoftwareDocumentation(document=file, model=software)
             doc.save()

@@ -6,7 +6,6 @@ from manager.forms import (
 )
 from manager.models import (
     EquipmentDocumentation,
-    DocumentationMany,
     SoftwareDocumentation,
     Equipment,
     SSLCert,
@@ -59,7 +58,7 @@ class EquipmentAdmin(admin.ModelAdmin):
         "support__expiration_date",
     )
     inlines = (EquipmentDocumentationInline,)
-    autocomplete_fields = ("documentation_many",)
+    # autocomplete_fields = ("documentation_many",)
     search_fields = (
         "name",
         "ip",
@@ -129,12 +128,6 @@ class SupportContractAdmin(admin.ModelAdmin):
     list_filter = ("expiration_date", "contract_date")
     search_fields = ("support_provider",)
     # inlines = [EquipmentInline]
-
-
-@admin.register(DocumentationMany)
-class DocumentationAdmin(admin.ModelAdmin):
-    list_display = ("documentation",)
-    search_fields = ("documentation",)
 
 
 @admin.register(EquipmentDocumentation)

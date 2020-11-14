@@ -1,4 +1,5 @@
 from datetime import datetime
+from pathlib import Path
 import uuid
 from django.db import models
 from django.utils.translation import gettext_lazy as _
@@ -16,16 +17,6 @@ DNSValidator = RegexValidator(
     ),
     code=_("invalid"),
 )
-
-
-class DocumentationMany(models.Model):
-    uid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    documentation = models.FileField(
-        upload_to="Documentation/many", null=True, blank=True
-    )
-
-    def __str__(self):
-        return self.documentation.name
 
 
 class SupportContract(models.Model):
@@ -175,7 +166,6 @@ class Equipment(models.Model):
     entite_responsable = models.CharField(
         verbose_name=_("Responsible entity"), max_length=100, null=True, blank=True
     )
-    documentation_many = models.ManyToManyField(DocumentationMany, blank=True)
     role = models.CharField(
         verbose_name=_("Role"), max_length=100, null=True, blank=True
     )
@@ -257,13 +247,13 @@ class EquipmentDocumentation(models.Model):
     )
     document = models.FileField(
         verbose_name=_("Document"),
-        upload_to="Documentation/equipment",
+        upload_to="",
         null=True,
         blank=True,
     )
 
     def __str__(self) -> str:
-        return self.document.name
+        return Path(self.document.name).name
 
 
 class SoftwareDocumentation(models.Model):
@@ -273,10 +263,10 @@ class SoftwareDocumentation(models.Model):
     )
     document = models.FileField(
         verbose_name=_("Document"),
-        upload_to="Documentation/software",
+        upload_to="",
         null=True,
         blank=True,
     )
 
     def __str__(self) -> str:
-        return self.document.name
+        return Path(self.document.name).name
